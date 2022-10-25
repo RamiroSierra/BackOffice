@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 class LeagueTeamController extends Controller
 {
     //LeagueTeam
-    a
+    
 }

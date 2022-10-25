@@ -12,7 +12,7 @@ class ColoredCardController extends Controller
 //-----------------------------Create-----------------------------
     public function create(){
         $cards = ColoredCard::all();
-        return view('prueba2', compact('cards'));
+        return view('cardColor', compact('cards'));
     }
     
     public function keep (Request $request){
@@ -20,15 +20,14 @@ class ColoredCardController extends Controller
         return redirect()->route('card.create');
     }
 //-----------------------------delete-----------------------------
-      public function delete (ColoredCard $card){
+    public function delete (ColoredCard $card){
         $card->delete();
         return back();
     }
 //-----------------------------update-----------------------------
     public function edit(ColoredCard $card){
-        return view('prueba3',compact('card'));
+        return view('cardColorUpdate',compact('card'));
     }
-
     public function update (Request $request,ColoredCard $card){
         $data = $request->only('color');
         $card->update($data);
