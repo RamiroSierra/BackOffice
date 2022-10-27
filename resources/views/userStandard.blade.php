@@ -7,33 +7,38 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/CreateStandard" method="post"> @csrf
-        nombre <input type="text" name="nombre" id="">  <br>
-        apellido <input type="text" name="apellido" id="">  <br>
-        alias <input type="text" name="alias" id="">  <br>
-        email <input type="text" name="email" id="">  <br>
-        Password <input type="text" name="password" id=""> <br>
+    <form action="{{ route('Standard.keep')}}" method="post"> @csrf
+        nombre <input type="text" name="nombre"><br>
+        apellido <input type="text" name="apellido"><br>
+        alias <input type="text" name="name"><br>
+        email <input type="text" name="email"><br>
+        Password <input type="text" name="password"><br>
         <input type="submit" value="Registrar">
     </form>
-    <form action="/lista" method="get">
-        <table>
-            <tbody>
+    <table>
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Alais</th>
+                <th>Email</th>
+            </tr>
+            @foreach ($sqls as $sql)
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Alais</th>
-                    <th>Email</th>
+                    <td>{{ $sql->clientN }}</td>
+                    <td>{{ $sql->clientA }}</td>
+                    <td>{{ $sql->userN }}</td>
+                    <td>{{ $sql->userE }}
+                        <form action="{{ route('Standard.delete', $sql->id) }}" method="get" style="display: inline-block"> @csrf
+                        <button type="submit">Borrar</button>
+                        </form>
+                    </td>
+                    {{--<form action="{{ route('Standard.edit', $sql->id) }}" style="display: inline-block"> @csrf
+                        <button type="submit">Actualizar</button>
+                    </form>--}}
                 </tr>
-                @foreach ($sqls as $sql)
-                    <tr>
-                        <td>{{ $sql->clientN }}</td>
-                        <td>{{ $sql->clientA }}</td>
-                        <td>{{ $sql->userN }}</td>
-                        <td>{{ $sql->userE }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </form>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>
