@@ -7,6 +7,5 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    
-
+  
 }

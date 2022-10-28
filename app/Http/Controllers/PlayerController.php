@@ -22,7 +22,7 @@ class PlayerController extends Controller
         $player->delete();
         return back();
     }
-//-----------------------------Delete-----------------------------
+//-----------------------------Update-----------------------------
     public function edit(Player $player){
         return view('playerUpdate',compact('player'));
     }

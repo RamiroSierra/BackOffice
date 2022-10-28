@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 class TypeOfResultController extends Controller
 {
     //TypeOfResult
-    a
+    //tendrian que agregarse a nivel de base de datos
 }

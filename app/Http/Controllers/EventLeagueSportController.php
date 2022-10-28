@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 class EventLeagueSportController extends Controller
 {
     //EventLeagueSport
-    a
+    //Hay que chequiar esto
 }
