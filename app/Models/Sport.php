@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sport extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    
     protected $fillable = ['nombre','URL'];
 
 }

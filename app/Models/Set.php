@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Set extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 }

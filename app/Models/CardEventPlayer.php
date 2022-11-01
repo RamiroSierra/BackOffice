@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CardEventPlayer extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
 }

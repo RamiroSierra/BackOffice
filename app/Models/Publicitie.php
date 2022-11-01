@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Publicitie extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    protected $fillable = ['URL'];
+
 }

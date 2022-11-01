@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('user.receiveAndCreate')}}" method="post"> @csrf
+    <form action="{{ route('user.ReceiveDataAndCreateUser') }}" method="post"> @csrf
         nombre <input type="text" name="nombre"><br>
         apellido <input type="text" name="apellido"><br>
         alias <input type="text" name="name"><br>
@@ -32,7 +32,12 @@
                         <td>{{ $sql->clientN }}</td>
                         <td>{{ $sql->clientA }}</td>
                         <td>{{ $sql->userN }}</td>
-                        <td>{{ $sql->userE }}</tr>
+                        <td>{{ $sql->userE }}
+                            {{-- <form action="{{ route('user.StandardDeleteUser', $sql->id ) }}" method="get" style="display: inline-block"> @csrf
+                                <button type="submit">Borrar</button>
+                            </form> --}}
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -50,6 +55,7 @@
                         <td>{{ $sql->clientA }}</td>
                         <td>{{ $sql->userN }}</td>
                         <td>{{ $sql->userE }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

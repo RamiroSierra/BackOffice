@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TypeOfResult extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = "types_of_results";
 }

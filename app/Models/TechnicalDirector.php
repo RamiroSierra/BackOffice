@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TechnicalDirector extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    
     protected $fillable = ['nombre','apellido'];
 }

@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PublicitieSport extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    protected $table = "publicitie_sport";
+    protected $fillable = ['sport_id','publicitie_id'];
 }

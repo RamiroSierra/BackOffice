@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    
     protected $fillable = ['technical_director_id','nombre','nacimiento','nacionalidad'];
 }

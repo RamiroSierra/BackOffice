@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeagueSport extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 }

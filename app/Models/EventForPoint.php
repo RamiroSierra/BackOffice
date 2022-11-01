@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventForPoint extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 }

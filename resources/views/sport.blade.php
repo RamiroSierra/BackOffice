@@ -7,13 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('sport.keep')}}" method="post"> @csrf
+    <form action="{{ route('sport.SendDataSport')}}" method="post"> @csrf
         nombre <input type="text" name="nombre"><br>
         URL <input type="text" name="URL"><br>
-        <select name='result_id'>
-            @foreach ($results as $result)
-                <option value="{{ $result->id }}">{{ $result->tipo_resultado }}</option>
-            @endforeach
+        <select name='typeOfResult'>
+            <option value="1">Por Set</option>
+            <option value="2">Por Tantos</option>
+            <option value="3">Por Marca</option>
         </select>
         <input type="submit" value="Registrar">
     </form>
