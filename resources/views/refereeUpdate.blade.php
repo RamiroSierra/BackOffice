@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('referee.update', $referee->id) }}" method="post"> @csrf
+    <form action="{{ route('referee.UpdateReferee', $referee->id) }}" method="post"> @csrf
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre" value='{{ $referee->nombre }}'><br>
             Apellido <input type="text" name="apellido" value='{{ $referee->apellido }}'><br>

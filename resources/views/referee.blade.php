@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('referee.keep') }}" method="post"> @csrf
+    <form action="{{ route('referee.ReceiveDataAndCreateReferee') }}" method="post"> @csrf
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre"><br>
             Apellido <input type="text" name="apellido"><br>
@@ -25,10 +25,10 @@
                 <tr>
                     <td>{{ $referee->nombre }}</td>
                     <td>{{ $referee->apellido }}
-                        <form action="{{ route('referee.delete', $referee->id) }}" method="get" style="display: inline-block"> @csrf
+                        <form action="{{ route('referee.DeleteReferee', $referee->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>
-                        <form action="{{ route('referee.edit', $referee->id) }}" style="display: inline-block"> @csrf
+                        <form action="{{ route('referee.RedirectPageToEditReferee', $referee->id) }}" style="display: inline-block"> @csrf
                             <button type="submit">Actualizar</button>
                         </form>
                     </td>

@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('technical.keep') }}" method="post"> @csrf
+    <form action="{{ route('technical.ReceiveDataAndCreateTechnical') }}" method="post"> @csrf
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre"><br>
             Apellido <input type="text" name="apellido"><br>
@@ -25,10 +25,10 @@
                 <tr>
                     <td>{{ $technical->nombre }}</td>
                     <td>{{ $technical->apellido }}
-                        <form action="{{ route('technical.delete', $technical->id) }}" method="get" style="display: inline-block"> @csrf
+                        <form action="{{ route('technical.DeleteTechnical', $technical->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>
-                        <form action="{{ route('technical.edit', $technical->id) }}" style="display: inline-block"> @csrf
+                        <form action="{{ route('technical.RedirectPageToEditTechnical', $technical->id) }}" style="display: inline-block"> @csrf
                             <button type="submit">Actualizar</button>
                         </form>
                     </td>
