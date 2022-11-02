@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('card.keep') }}" method="post"> @csrf
+    <form action="{{ route('card.ReceiveDataAndCreateColoredCard') }}" method="post"> @csrf
         <div style="display: inline-block">
             Color <input type="text" name="color"><br>
         </div>
@@ -26,10 +26,10 @@
                         <div style="display: inline-block">
                             <p>{{ $card->color }}</p><br>
                         </div>
-                        <form action="{{ route('card.delete', $card->id) }}" method="get" style="display: inline-block"> @csrf
+                        <form action="{{ route('card.DeleteColoredCard', $card->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>
-                        <form action="{{ route('card.edit', $card->id) }}" style="display: inline-block"> @csrf
+                        <form action="{{ route('card.RedirectPageToEditColoredCard', $card->id) }}" style="display: inline-block"> @csrf
                             <button type="submit">Actualizar</button>
                         </form>
                     </td>

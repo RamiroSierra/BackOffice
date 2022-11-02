@@ -10,17 +10,17 @@ use App\Http\Controllers\VipController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\PublicitieController;
 
-Route::get("/CardColor/create",[ColoredCardController::class,'create'])->name('card.create');
-Route::post("/CardColor",[ColoredCardController::class,'keep'])->name('card.keep');
-Route::get("/CardColor/{card}",[ColoredCardController::class,'delete'])->name('card.delete');
-Route::get("/CardColor/{card}/update",[ColoredCardController::class,'edit'])->name('card.edit');
-Route::post('/CardColor/{card}',[ColoredCardController::class,'update'])->name('card.update');
+Route::get("/CardColor/create",[ColoredCardController::class,'SendDataColoredCard'])->name('card.SendDataColoredCard');
+Route::post("/CardColor",[ColoredCardController::class,'ReceiveDataAndCreateColoredCard'])->name('card.ReceiveDataAndCreateColoredCard');
+Route::get("/CardColor/{card}",[ColoredCardController::class,'DeleteColoredCard'])->name('card.DeleteColoredCard');
+Route::get("/CardColor/{card}/update",[ColoredCardController::class,'RedirectPageToEditColoredCard'])->name('card.RedirectPageToEditColoredCard');
+Route::post('/CardColor/{card}',[ColoredCardController::class,'UpdateColoredCard'])->name('card.UpdateColoredCard');
 //------------------------------------------------------------------------------------------------
-Route::get("/player/create",[PlayerController::class,'create'])->name('player.create');
-Route::post("/player",[PlayerController::class,'keep'])->name('player.keep');
-Route::get("/player/{player}",[PlayerController::class,'delete'])->name('player.delete');
-Route::get("/player/{player}/update",[PlayerController::class,'edit'])->name('player.edit');
-Route::post('/player/{player}',[PlayerController::class,'update'])->name('player.update');
+Route::get("/player/create",[PlayerController::class,'SendDataPlayer'])->name('player.SendDataPlayer');
+Route::post("/player",[PlayerController::class,'ReceiveDataAndCreatePlayer'])->name('player.ReceiveDataAndCreatePlayer');
+Route::get("/player/{player}",[PlayerController::class,'DeletePlayer'])->name('player.DeletePlayer');
+Route::get("/player/{player}/update",[PlayerController::class,'RedirectPageToEditPlayer'])->name('player.RedirectPageToEditPlayer');
+Route::post('/player/{player}',[PlayerController::class,'UpdatePlayer'])->name('player.UpdatePlayer');
 //------------------------------------------------------------------------------------------------
 Route::get("/referee/create",[RefereeController::class,'create'])->name('referee.create');
 Route::post("/referee",[RefereeController::class,'keep'])->name('referee.keep');

@@ -12,5 +12,6 @@ class EventController extends Controller
     //EventReferee
     //EventPlayer
     //CardEventPlayer
+    //EventLeagueSport
 
 }

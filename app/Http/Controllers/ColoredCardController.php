@@ -9,26 +9,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ColoredCardController extends Controller
 {
-//-----------------------------Create-----------------------------
-    public function create(){
+    public function SendDataColoredCard (){
         $cards = ColoredCard::all();
         return view('cardColor', compact('cards'));
     }
     
-    public function keep (Request $request){
+    public function ReceiveDataAndCreateColoredCard (Request $request){
         $card = ColoredCard::create($request->only('color'));
-        return redirect()->route('card.create');
+        return redirect()->route('card.SendDataColoredCard');
     }
-//-----------------------------delete-----------------------------
-    public function delete (ColoredCard $card){
+    
+    public function DeleteColoredCard (ColoredCard $card){
         $card->delete();
         return back();
     }
-//-----------------------------update-----------------------------
-    public function edit(ColoredCard $card){
-        return view('cardColorUpdate',compact('card'));
+
+    public function RedirectPageToEditColoredCard (ColoredCard $card){
+        return view('cardColorupdate',compact('card'));
     }
-    public function update (Request $request,ColoredCard $card){
+
+    public function UpdateColoredCard (Request $request,ColoredCard $card){
         $data = $request->only('color');
         $card->update($data);
         return redirect()->route('card.create', $card->id);

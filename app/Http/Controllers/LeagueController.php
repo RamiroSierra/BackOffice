@@ -8,5 +8,6 @@ class LeagueController extends Controller
 {
     //League
     //LeagueSport
+    //LeagueTeam
 
 }

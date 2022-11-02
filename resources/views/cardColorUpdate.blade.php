@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('card.update', $card->id) }}" method="post"> @csrf
+    <form action="{{ route('card.UpdateColoredCard', $card->id) }}" method="post"> @csrf
         <div style="display: inline-block">
             Color <input type="text" name="color" value="{{ $card->color }}"><br>
         </div>

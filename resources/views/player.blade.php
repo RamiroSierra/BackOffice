@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('player.keep') }}" method="post"> @csrf
+    <form action="{{ route('player.ReceiveDataAndCreatePlayer') }}" method="post"> @csrf
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre"><br>
             Apellido <input type="text" name="apellido"><br>
@@ -29,10 +29,10 @@
                     <td>{{ $player->apellido }}</td>
                     <td>{{ $player->edad }}</td>
                     <td>{{ $player->nacionalidad }}
-                        <form action="{{ route('player.delete', $player->id) }}" method="get" style="display: inline-block"> @csrf
+                        <form action="{{ route('player.DeletePlayer', $player->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>
-                        <form action="{{ route('player.edit', $player->id) }}" style="display: inline-block"> @csrf
+                        <form action="{{ route('player.RedirectPageToEditPlayer', $player->id) }}" style="display: inline-block"> @csrf
                             <button type="submit">Actualizar</button>
                         </form>
                     </td>

@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('player.update', $player->id) }}" method="post"> @csrf
+    <form action="{{ route('player.UpdatePlayer', $player->id) }}" method="post"> @csrf
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre" value='{{ $player->nombre }}'><br>
             Apellido <input type="text" name="apellido" value='{{ $player->apellido }}'><br>
