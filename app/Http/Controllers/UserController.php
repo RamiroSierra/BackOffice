@@ -11,6 +11,8 @@ use App\Models\ClientUser;
 use App\Models\External;
 use App\Models\Standard;
 use App\Models\Vip;
+use App\Models\CardVip;
+use App\Models\Card;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 

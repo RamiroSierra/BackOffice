@@ -10,5 +10,5 @@ class Team extends Model
 {
     use HasFactory, SoftDeletes;
     
-    protected $fillable = ['technical_director_id','nombre','nacimiento','nacionalidad'];
+    protected $fillable = ['nombre','nacimiento','nacionalidad','URL','technical_director_id'];
 }

@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class League extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ['nombre','URL'];
 }

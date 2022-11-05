@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PlayerTeam extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = "player_team";
+    protected $fillable = ['team_id','player_id'];
 }

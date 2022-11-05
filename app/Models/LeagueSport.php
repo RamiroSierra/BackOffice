@@ -10,4 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class LeagueSport extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = "league_sport";
+    protected $fillable = ['sport_id','league_id'];
 }

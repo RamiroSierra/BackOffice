@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CardVip extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ['',''];
 }

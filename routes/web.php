@@ -9,6 +9,10 @@ use App\Http\Controllers\TechnicalDirectorController;
 use App\Http\Controllers\VipController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\PublicitieController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\ForPointController;
+use App\Http\Controllers\LeagueController;
+
 
 Route::get("/CardColor/create",[ColoredCardController::class,'SendDataColoredCard'])->name('card.SendDataColoredCard');
 Route::post("/CardColor",[ColoredCardController::class,'ReceiveDataAndCreateColoredCard'])->name('card.ReceiveDataAndCreateColoredCard');
@@ -42,3 +46,12 @@ Route::post("/user",[UserController::class,'ReceiveDataAndCreateUser'])->name('u
 //------------------------------------------------------------------------------------------------
 Route::get("/publicitie/create",[PublicitieController::class,'SendDataPublicitie'])->name('publicitie.SendDataPublicitie');
 Route::post("/publicitie",[PublicitieController::class,'ReceiveDataAndCreatePublicitie'])->name('publicitie.ReceiveDataAndCreatePublicitie');
+//------------------------------------------------------------------------------------------------
+Route::get("/team/create",[TeamController::class,'SendDataTeam'])->name('team.SendDataTeam');
+Route::post("/team",[TeamController::class,'ReceiveDataAndCreateTeam'])->name('team.ReceiveDataAndCreateTeam');
+//------------------------------------------------------------------------------------------------
+Route::get("/forPoint/create",[ForPointController::class,'SendDataForPoint'])->name('forPoint.SendDataForPoint');
+Route::post("/forPoint",[ForPointController::class,'ReceiveDataAndCreateForPoint'])->name('forPoint.ReceiveDataAndCreateForPoint');
+//------------------------------------------------------------------------------------------------
+Route::get("/league/create",[LeagueController::class,'SendDataLeague'])->name('league.SendDataLeague');
+Route::post("/league",[LeagueController::class,'ReceiveDataAndCreateLeague'])->name('league.ReceiveDataAndCreateLeague');

@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EventForPoint extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = "event_for_point";
+    protected $fillable = ['for_point_id','event_id'];
 }
