@@ -12,19 +12,23 @@
             Nacimiento <input type="text" name="nacimiento"><br>
             Nacionalidad <input type="text" name="nacionalidad"><br>
             URL <input type="text" name="URL"><br>
-        <select name='Technicals' style="display: block">
-            @foreach ($technicals as $technical)
-                    <option value="{{ $technical->id }}">{{ $technical->nombre }} {{ $technical->apellido }}</option>
+            <div style="display: block">
+            Technico
+                <select name='Technicals'>
+                    @foreach ($technicals as $technical)
+                            <option value="{{ $technical->id }}">{{ $technical->nombre }} {{ $technical->apellido }}</option>
+                    @endforeach
+                </select>
+            <div>
+            Jugadores
+            @foreach ($players as $palyer)
+                <tr>
+                    <td>
+                        <input type="checkbox" value="{{ $palyer->id }}" id="{{ $palyer->id }}" name="seleccionarJugadores[]">
+                        {{ $palyer->nombre }} {{ $palyer->apellido }}
+                    </td>
+                </tr>
             @endforeach
-        </select>
-        @foreach ($players as $palyer)
-			<tr>
-				<td>
-                    <input type="checkbox" value="{{ $palyer->id }}" id="{{ $palyer->id }}" name="seleccionarJugadores[]">
-                	{{ $palyer->nombre }} {{ $palyer->apellido }}
-                </td>
-			</tr>
-		@endforeach
         <div style="display: block">
             <input type="submit" value="Guardar">
         </div>

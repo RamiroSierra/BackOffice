@@ -27,17 +27,7 @@
             </tr>
             @foreach ($publicities as $publicitie)
                 <tr>
-                    <td>
-                        <div style="display: inline-block">
-                            <p>{{ $publicitie->URL }}</p><br>
-                        </div> 
-                        {{-- <form action="{{ route('card.delete', $card->id) }}" method="get" style="display: inline-block"> @csrf
-                            <button type="submit">Borrar</button>
-                        </form>
-                        <form action="{{ route('card.edit', $card->id) }}" style="display: inline-block"> @csrf
-                            <button type="submit">Actualizar</button>
-                        </form> --}}
-                    </td>
+                    <td>{{ $publicitie->URL }}</td>
                 </tr>
             @endforeach
         </tbody>

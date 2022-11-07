@@ -12,7 +12,7 @@
         apellido <input type="text" name="apellido"><br>
         alias <input type="text" name="name"><br>
         email <input type="text" name="email"><br>
-        Password <input type="text" name="password"><br>
+        Password <input type="password" name="password"><br>
         <select name='typeOfClient'>
             <option value="1">Standard</option>
             <option value="2">Vip</option>

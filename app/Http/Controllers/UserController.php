@@ -13,6 +13,7 @@ use App\Models\Standard;
 use App\Models\Vip;
 use App\Models\CardVip;
 use App\Models\Card;
+use \Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
@@ -41,22 +42,47 @@ class UserController extends Controller
     }
 
     public function ReceiveDataAndCreateUser (Request $request){
-        $user = User::create($request->only('name','email') + ['password' => bcrypt($request->input('password')),]);
-        $client = Client::create($request->only('nombre','apellido'));
-        $external = External::create([
-            'client_id' => $client->id
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
-        ClientUser::create([
-            'user_id' => $user->id,
-            'client_id' => $client->id
-        ]);
-        if($request->post('typeOfClient') == '1'){
-            Standard::create(['client_id' => $external->client_id]);
-            return redirect()->route('user.sendData');
+        if ($validator -> fails())
+            return "Todos los campos deben de estar llenos";
+
+        try {
+            $user = User::create([
+                'name' => $request -> post("name"),
+                'email' => $request -> post("email"),
+                'password' => Hash::make($request -> post("password"))
+            ]);
+            $client = Client::create([
+                'nombre' => $request -> post("name"),
+                'apellido' => $request -> post("apellido")
+            ]);
+            $external = External::create([
+                'client_id' => $client->id
+            ]);
+            ClientUser::create([
+                'user_id' => $user->id,
+                'client_id' => $client->id
+            ]);
+            if($request->post('typeOfClient') == '1'){
+                Standard::create(['client_id' => $external->client_id]);
+                return redirect()->route('user.SendDataUser');
+            }
+            $vip = Vip::create([
+                'client_id' => $external->client_id
+            ]);
+            return redirect()->route('card.SendDataCard', $vip->client_id);
         }
-        Vip::create(['client_id' => $external->client_id]);
-        return redirect()->route('user.sendData');
+        catch (QueryException $e){
+            return "Algun dato Ingresado es incorrecto";
+        }
     }
+    
 
     // public function StandardDelete (User $user,Client $client){
     //     $userStandard = DB::table('users')

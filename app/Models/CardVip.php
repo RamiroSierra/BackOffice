@@ -9,5 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CardVip extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['',''];
+    protected $table = "card_vip";
+    protected $fillable = ['client_id','card_id'];
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Player;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use \Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PlayerController extends Controller
@@ -13,9 +15,43 @@ class PlayerController extends Controller
     }
 
     public function ReceiveDataAndCreatePlayer (Request $request){
-        $player = Player::create($request->only('edad','nombre','apellido','nacionalidad'));
-        return redirect()->route('player.SendDataPlayer');
+        $validator = Validator::make($request->all(),[
+            'edad' => 'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'nacionalidad' => 'required'
+        ]);
+        if ($validator -> fails())
+            return "Todos los campos deben de estar llenos";
+        try {
+            $player = Player::create([
+                'edad' => $request -> post("edad"),
+                'nombre' => $request -> post("nombre"),
+                'apellido' => $request -> post("apellido"),
+                'nacionalidad' => $request -> post("nacionalidad")
+            ]);
+            return redirect()->route('player.SendDataPlayer');
+        }
+        catch (QueryException $e){
+            return "Algun dato Ingresado es incorrecto";
+        }
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function DeletePlayer (Player $player){
         $player->delete();

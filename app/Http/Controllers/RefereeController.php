@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Referee;
+use Illuminate\Support\Facades\Validator;
+use \Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class RefereeController extends Controller
@@ -13,8 +15,22 @@ class RefereeController extends Controller
     }
 
     public function ReceiveDataAndCreateReferee (Request $request){
-        $referee = Referee::create($request->only('nombre','apellido'));
-        return redirect()->route('referee.SendDataReferee');
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required',
+            'apellido' => 'required',
+        ]);
+        if ($validator -> fails())
+            return "Todos los campos deben de estar llenos";
+        try {
+           $referee = Referee::create([
+                'nombre' => $request -> post("nombre"),
+                'apellido' => $request -> post("apellido")
+            ]);
+            return redirect()->route('referee.SendDataReferee');
+        }
+        catch (QueryException $e){
+            return "Algun dato Ingresado es incorrecto";
+        }
     }
 
     public function DeleteReferee (Referee $referee){

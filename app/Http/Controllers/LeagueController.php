@@ -6,6 +6,8 @@ use App\Models\LeagueSport;
 use App\Models\LeagueTeam;
 use App\Models\Team;
 use App\Models\Sport;
+use Illuminate\Support\Facades\Validator;
+use \Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class LeagueController extends Controller
@@ -18,22 +20,38 @@ class LeagueController extends Controller
     }
 
     public function ReceiveDataAndCreateLeague (Request $request){
-        $league = League::create([
-            'nombre' => $request -> post("nombre"),
-            'URL' => $request -> post("URL"),
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required',
+            'URL' => 'required',
+            'seleccionarEquipo' => 'required'
         ]);
-        LeagueSport::create([
-            'league_id' => $league->id,
-            'sport_id' => $request -> post("Sports"),
+
+        if ($validator -> fails())
+            return "Todos los campos deben de estar llenos";
+            
+        try {
+            $league = League::create([
+                'nombre' => $request -> post("nombre"),
+                'URL' => $request -> post("URL"),
             ]);
-        $seleccions = $request->seleccionarEquipo;
-        foreach ($seleccions as $seleccion) {
-                LeagueTeam::create([
+            LeagueSport::create([
                 'league_id' => $league->id,
-                'team_id' => $seleccion,
-                ]);
+                'sport_id' => $request -> post("Sports"),
+            ]);
+            $seleccions = $request->seleccionarEquipo;
+            foreach ($seleccions as $seleccion) {
+                    LeagueTeam::create([
+                        'league_id' => $league->id,
+                        'team_id' => $seleccion
+                    ]);
+            }
+            return redirect()->route('league.SendDataLeague');
         }
-        return redirect()->route('league.SendDataLeague');
+        catch (QueryException $e){
+            return "Algun dato Ingresado es incorrecto";
+        }
+        
+        
     }
 
 }

@@ -11,7 +11,7 @@
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre"><br>
             Apellido <input type="text" name="apellido"><br>
-            Edad <input type="text" name="edad"><br>
+            Edad <input type="number" name="edad"><br>
             Nacionalidad <input type="text" name="nacionalidad"><br>
         </div>
         <div style="display: inline-block">

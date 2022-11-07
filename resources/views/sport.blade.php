@@ -7,9 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('sport.SendDataSport')}}" method="post"> @csrf
+    <form action="{{ route('sport.ReceiveDataAndCreateSport') }}" method="post"> @csrf
         nombre <input type="text" name="nombre"><br>
         URL <input type="text" name="URL"><br>
+        
         <select name='typeOfResult'>
             <option value="1">Por Set</option>
             <option value="2">Por Tantos</option>

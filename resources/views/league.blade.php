@@ -10,11 +10,16 @@
     <form action="{{ route('league.ReceiveDataAndCreateLeague') }}" method="post"> @csrf
             Nombre <input type="text" name="nombre"><br>
             URL <input type="text" name="URL"><br>
-            <select name='Sports' style="display: block">
+            <div style="display: block">
+            Deporte
+            <select name='Sports'>
                 @foreach ($sports as $sport)
                         <option value="{{ $sport->id }}">{{ $sport->nombre }}</option>
                 @endforeach
             </select>
+            </div>
+            <div style="display: block">
+            Equipos
             @foreach ($teams as $team)
                 <tr>
                     <td>
@@ -23,6 +28,7 @@
                     </td>
                 </tr>
             @endforeach
+            </div>
             <div style="display: block">
                 <input type="submit" value="Guardar">
             </div>
@@ -34,7 +40,7 @@
             </tr>
             @foreach ($leagues as $league)
                 <tr>
-                    <td>{{ $team->nombre }}
+                    <td>{{ $league->nombre }}
                         {{-- <form action="{{ route('card.delete', $card->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>

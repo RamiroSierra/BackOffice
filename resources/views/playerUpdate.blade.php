@@ -11,7 +11,7 @@
         <div style="display: inline-block">
             Nombre <input type="text" name="nombre" value='{{ $player->nombre }}'><br>
             Apellido <input type="text" name="apellido" value='{{ $player->apellido }}'><br>
-            Edad <input type="text" name="edad" value='{{ $player->edad }}'><br>
+            Edad <input type="number" name="edad" value='{{ $player->edad }}'><br>
             Nacionalidad <input type="text" name="nacionalidad" value='{{ $player->nacionalidad }}'><br>
         </div>
         <div style="display: inline-block">

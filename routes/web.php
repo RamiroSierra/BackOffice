@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ColoredCardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RefereeController;
@@ -12,14 +11,8 @@ use App\Http\Controllers\PublicitieController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ForPointController;
 use App\Http\Controllers\LeagueController;
+use App\Http\Controllers\CardController;
 
-
-Route::get("/CardColor/create",[ColoredCardController::class,'SendDataColoredCard'])->name('card.SendDataColoredCard');
-Route::post("/CardColor",[ColoredCardController::class,'ReceiveDataAndCreateColoredCard'])->name('card.ReceiveDataAndCreateColoredCard');
-Route::get("/CardColor/{card}",[ColoredCardController::class,'DeleteColoredCard'])->name('card.DeleteColoredCard');
-Route::get("/CardColor/{card}/update",[ColoredCardController::class,'RedirectPageToEditColoredCard'])->name('card.RedirectPageToEditColoredCard');
-Route::post('/CardColor/{card}',[ColoredCardController::class,'UpdateColoredCard'])->name('card.UpdateColoredCard');
-//------------------------------------------------------------------------------------------------
 Route::get("/player/create",[PlayerController::class,'SendDataPlayer'])->name('player.SendDataPlayer');
 Route::post("/player",[PlayerController::class,'ReceiveDataAndCreatePlayer'])->name('player.ReceiveDataAndCreatePlayer');
 Route::get("/player/{player}",[PlayerController::class,'DeletePlayer'])->name('player.DeletePlayer');
@@ -43,6 +36,8 @@ Route::post("/sport",[SportController::class,'ReceiveDataAndCreateSport'])->name
 //------------------------------------------------------------------------------------------------
 Route::get("/user/create",[UserController::class,'SendDataUser'])->name('user.SendDataUser');
 Route::post("/user",[UserController::class,'ReceiveDataAndCreateUser'])->name('user.ReceiveDataAndCreateUser');
+Route::get("/user/{vip}/card/create",[CardController::class,'SendDataCard'])->name('card.SendDataCard');
+Route::post("/user/{vip}/card",[CardController::class,'ReceiveDataAndCreateCard'])->name('card.ReceiveDataAndCreateCard');
 //------------------------------------------------------------------------------------------------
 Route::get("/publicitie/create",[PublicitieController::class,'SendDataPublicitie'])->name('publicitie.SendDataPublicitie');
 Route::post("/publicitie",[PublicitieController::class,'ReceiveDataAndCreatePublicitie'])->name('publicitie.ReceiveDataAndCreatePublicitie');
