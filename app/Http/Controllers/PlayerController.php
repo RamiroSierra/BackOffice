@@ -38,21 +38,6 @@ class PlayerController extends Controller
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function DeletePlayer (Player $player){
         $player->delete();
         return back();

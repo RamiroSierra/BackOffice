@@ -39,14 +39,14 @@
                 <th>Nombre</th>
                 <th>Nacimiento</th>
                 <th>Nacionalidad</th>
-                <th>URL</th>
             </tr>
             @foreach ($teams as $team)
                 <tr>
                     <td>{{ $team->nombre }}</td>
                     <td>{{ $team->nacimiento }}</td>
                     <td>{{ $team->nacionalidad }}</td>
-                    <td>{{ $team->URL }}
+                    <td>{{ $team->tipo_resultado }}</td>
+                    <td>
                         {{-- <form action="{{ route('card.delete', $card->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>

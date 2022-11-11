@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Record extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['team_id','event_id'];
+    protected $fillable = ['unidad_de_medida','puntaje'];
 }

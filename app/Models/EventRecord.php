@@ -9,5 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EventRecord extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['team_id','event_id'];
+    protected $table = "event_record";
+    protected $fillable = ['record_id','event_id'];
 }

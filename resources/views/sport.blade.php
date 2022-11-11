@@ -22,18 +22,16 @@
         <tbody>
             <tr>
                 <th>Nombre</th>
-                <th>URL</th>
+                <th>Tipo de deporte</th>
             </tr>
             @foreach ($sports as $sport)
                 <tr>
                     <td>{{ $sport->nombre }}</td>
-                    <td>{{ $sport->URL}}
-                       {{-- <form action="{{ route('sport.delete', $sport->id) }}" method="get" style="display: inline-block"> @csrf
-                            <button type="submit">Borrar</button>
-                        </form>
-                         <form action="{{ route('sport.edit', $sport->id) }}" style="display: inline-block"> @csrf
+                    <td>{{ $sport->tipo_resultado }}</td>
+                    <td>
+                         <form action="{{ route('sport.RedirectPageToEditSport', $sport->id) }}" style="display: inline-block"> @csrf
                             <button type="submit">Actualizar</button>
-                        </form> --}}
+                        </form>
                     </td>
                 </tr>
             @endforeach

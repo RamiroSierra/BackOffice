@@ -13,9 +13,8 @@ use App\Models\Referee;
 use App\Models\League;
 use Illuminate\Support\Facades\Validator;
 use \Illuminate\Database\QueryException;
-
-
 use Illuminate\Http\Request;
+
 
 class ForPointController extends Controller
 {

@@ -21,9 +21,7 @@ class UserController extends Controller
 {
 //-----------------------------Create--------------------------
     public function SendDataUser(){
-        $users = User::all();
-        $clients = Client::all();
-        $sqls = DB::table('users')
+        $standards = DB::table('users')
         ->join('client_user', 'client_user.user_id',  'users.id')
         ->join('clients', 'client_user.client_id', 'clients.id')
         ->join('externals', 'clients.id', 'externals.client_id')
@@ -31,14 +29,14 @@ class UserController extends Controller
         ->select('clients.nombre as clientN','clients.apellido as clientA',
         'users.name as userN', 'users.email as userE','users.id as id' )
         ->get();
-        $sqls2 = DB::table('users')
+        $vips = DB::table('users')
         ->join('client_user', 'client_user.user_id',  'users.id')
         ->join('clients', 'client_user.client_id', 'clients.id')
         ->join('externals', 'clients.id', 'externals.client_id')
         ->join('vips', 'externals.client_id', 'vips.client_id')
         ->select('clients.nombre as clientN','clients.apellido as clientA','users.name as userN', 'users.email as userE','users.id as id' )
         ->get();
-        return view('user', compact('sqls', 'sqls2'));
+        return view('user', compact('standards', 'vips'));
     }
 
     public function ReceiveDataAndCreateUser (Request $request){
@@ -83,16 +81,22 @@ class UserController extends Controller
         }
     }
     
+    public function RedirectPageToEditStandard ($standard){
+        $oda = DB::table('users')
+        ->join('client_user', 'client_user.user_id',  'users.id')
+        ->join('clients', 'client_user.client_id', 'clients.id')
+        ->join('externals', 'clients.id', 'externals.client_id')
+        ->join('standards', 'externals.client_id', 'standards.client_id')
+        ->select('clients.nombre as clientN','clients.apellido as clientA',
+        'users.name as userN', 'users.email as userE','users.id as id' )
+        ->where('standards.client_id',$standard)
+        ->get();
+        return view('satandardUpdate',compact('oda','standard'));
+    } 
 
-    // public function StandardDelete (User $user,Client $client){
-    //     $userStandard = DB::table('users')
-    //     ->join('client_user', 'client_user.user_id',  'users.id')
-    //     ->join('clients', 'client_user.client_id', 'clients.id')
-    //     ->join('externals', 'clients.id', 'externals.client_id')
-    //     ->join('standards', 'externals.client_id', 'standards.client_id')
-    //     ->select('users.id as Uid','clients.id as Cid','client_user.id','externals.id','standards.id')
-    //     ->where('users.id',$user->id)
-    //     ->get();
-    //     return back();
-    // }
+    public function UpdateStandard (Request $request,Standard $standard){
+        $data = $request->only('nombre','apellido','name','email','password');
+        $standard->update($data);
+        return redirect()->route('usar.ReceiveDataAndCreateUser', $standard->id);
+    } 
 }

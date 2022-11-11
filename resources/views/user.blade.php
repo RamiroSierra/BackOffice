@@ -11,7 +11,7 @@
         nombre <input type="text" name="nombre"><br>
         apellido <input type="text" name="apellido"><br>
         alias <input type="text" name="name"><br>
-        email <input type="text" name="email"><br>
+        email <input type="email" name="email"><br>
         Password <input type="password" name="password"><br>
         <select name='typeOfClient'>
             <option value="1">Standard</option>
@@ -22,20 +22,24 @@
         <table style="float:left;">
             <tbody>
                 <tr>
+                    <th>Usuarios entendar</th>
+                </tr>
+                <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Alais</th>
                     <th>Email</th>
                 </tr>
-                @foreach ($sqls as $sql)
+                @foreach ($standards as $standard)
                     <tr>
-                        <td>{{ $sql->clientN }}</td>
-                        <td>{{ $sql->clientA }}</td>
-                        <td>{{ $sql->userN }}</td>
-                        <td>{{ $sql->userE }}
-                            {{-- <form action="{{ route('user.StandardDeleteUser', $sql->id ) }}" method="get" style="display: inline-block"> @csrf
-                                <button type="submit">Borrar</button>
-                            </form> --}}
+                        <td>{{ $standard->clientN }}</td>
+                        <td>{{ $standard->clientA }}</td>
+                        <td>{{ $standard->userN }}</td>
+                        <td>{{ $standard->userE }}</td>
+                        <td>
+                            <form action="{{ route('standard.RedirectPageToEditStandard', $standard->id ) }}" method="get" style="display: inline-block"> @csrf
+                                <button type="submit">Actualizar</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -44,17 +48,20 @@
         <table>
             <tbody>
                 <tr>
+                    <th>Usuarios entendar</th>
+                </tr>
+                <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Alais</th>
                     <th>Email</th>
                 </tr>
-                @foreach ($sqls2 as $sql)
+                @foreach ($vips as $vip)
                     <tr>
-                        <td>{{ $sql->clientN }}</td>
-                        <td>{{ $sql->clientA }}</td>
-                        <td>{{ $sql->userN }}</td>
-                        <td>{{ $sql->userE }}
+                        <td>{{ $vip->clientN }}</td>
+                        <td>{{ $vip->clientA }}</td>
+                        <td>{{ $vip->userN }}</td>
+                        <td>{{ $vip->userE }}
                         </td>
                     </tr>
                 @endforeach

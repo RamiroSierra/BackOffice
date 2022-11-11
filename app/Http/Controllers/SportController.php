@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use App\Models\Sport;
 use App\Models\ResultSport;
 use App\Models\TypeOfResult;
@@ -11,7 +12,11 @@ use Illuminate\Http\Request;
 class SportController extends Controller
 {
     public function SendDataSport(){
-        $sports = Sport::all();
+        $sports = DB::table('sports')
+        ->join('result_sport','result_sport.sport_id', 'sports.id')
+        ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
+        ->select('sports.nombre','types_of_results.tipo_resultado','sports.id as id')
+        ->get();
         return view('sport', compact('sports'));
     }
 
@@ -53,21 +58,17 @@ class SportController extends Controller
         catch (QueryException $e){
             return "Algun dato Ingresado es incorrecto";
         }
-        
     }
 
-//-----------------------------Delete-----------------------------
-    // public function delete (Sport $sport){
-    //     $sport->delete();
-    //     return back();
-    // }
-//-----------------------------Delete-----------------------------
-    // public function edit(Sport $sport){
-    //     return view('sportUpdate',compact('sport'));
-    // }
-    // public function update (Request $request,Sport $sport){
-    //     $data = $request->only('nombre','URL');
-    //     $sport->update($data);
-    //     return redirect()->route('sport.create', $sport->id);
-    // }
+    public function RedirectPageToEditSport (Sport $sport){
+        return view('SportUpdate',compact('sport'));
+    }
+
+    public function UpdateSport (Request $request,Sport $sport){
+        $data = $request->only('nombre','URL');
+        $sport->update($data);
+        return redirect()->route('sport.SendDataSport', $sport->id);
+    }
+
 }
+

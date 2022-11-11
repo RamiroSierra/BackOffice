@@ -7,11 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('sport.update', $sport->id) }}" method="post"> @csrf
-        <div style="display: inline-block">
+    <form action="{{ route('sport.UpdateSport', $sport->id) }}" method="post"> @csrf
             Nombre <input type="text" name="nombre" value='{{ $sport->nombre }}'><br>
             URL <input type="text" name="URL" value='{{ $sport->URL }}'><br>
-        </div>
         <div style="display: inline-block">
             <input type="submit" value="Guardar">
         </div>

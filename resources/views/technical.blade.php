@@ -19,12 +19,14 @@
     <table>
         <tbody>
             <tr>
-                <th>technical</th>
+                <th>nombre</th>
+                <th>apellido</th>
             </tr>
             @foreach ($technicals as $technical)
                 <tr>
                     <td>{{ $technical->nombre }}</td>
-                    <td>{{ $technical->apellido }}
+                    <td>{{ $technical->apellido }}</td>
+                    <td>
                         <form action="{{ route('technical.DeleteTechnical', $technical->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>

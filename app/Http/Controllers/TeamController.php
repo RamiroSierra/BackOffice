@@ -14,7 +14,15 @@ class TeamController extends Controller
 {
     public function SendDataTeam(){
         $players = Player::all();
-        $teams = Team::all();
+        $teams = DB::table('teams')
+        ->join('league_team', 'league_team.team_id','teams.id')
+        ->join('leagues','leagues.id', 'league_team.league_id')
+        ->join('league_sport','league_sport.league_id', 'leagues.id')
+        ->join('sports','sports.id', 'league_sport.sport_id')
+        ->join('result_sport','result_sport.sport_id', 'sports.id')
+        ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
+        ->select('teams.nombre','types_of_results.tipo_resultado')
+        ->get();
         $technicals = DB::table('technical_directors')
         ->leftjoin('teams', 'teams.technical_director_id','technical_directors.id')
         ->select('technical_directors.nombre','technical_directors.apellido','technical_directors.id')

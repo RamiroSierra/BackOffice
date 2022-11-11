@@ -12,6 +12,9 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ForPointController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\RecordController;
+use App\Http\Controllers\ForSetController;
+use App\Http\Controllers\SetController;
 
 Route::get("/player/create",[PlayerController::class,'SendDataPlayer'])->name('player.SendDataPlayer');
 Route::post("/player",[PlayerController::class,'ReceiveDataAndCreatePlayer'])->name('player.ReceiveDataAndCreatePlayer');
@@ -33,11 +36,23 @@ Route::post('/technical/{technical}',[TechnicalDirectorController::class,'Update
 //------------------------------------------------------------------------------------------------
 Route::get("/sport/create",[SportController::class,'SendDataSport'])->name('sport.SendDataSport');
 Route::post("/sport",[SportController::class,'ReceiveDataAndCreateSport'])->name('sport.ReceiveDataAndCreateSport');
+Route::get("/sport/{sport}/update",[SportController::class,'RedirectPageToEditSport'])->name('sport.RedirectPageToEditSport');
+Route::post('/sport/{sport}',[SportController::class,'UpdateSport'])->name('sport.UpdateSport');
+//fata delete
 //------------------------------------------------------------------------------------------------
 Route::get("/user/create",[UserController::class,'SendDataUser'])->name('user.SendDataUser');
 Route::post("/user",[UserController::class,'ReceiveDataAndCreateUser'])->name('user.ReceiveDataAndCreateUser');
 Route::get("/user/{vip}/card/create",[CardController::class,'SendDataCard'])->name('card.SendDataCard');
 Route::post("/user/{vip}/card",[CardController::class,'ReceiveDataAndCreateCard'])->name('card.ReceiveDataAndCreateCard');
+
+Route::get("/user/{standard}/update",[UserController::class,'RedirectPageToEditStandard'])->name('standard.RedirectPageToEditStandard');
+Route::post('/user/{standard}',[UserController::class,'UpdateStandard'])->name('standard.UpdateStandard');
+//en progreso
+Route::get("/user/{standard}",[UserController::class,'DeleteStandard'])->name('user.DeleteStandard');
+
+
+
+
 //------------------------------------------------------------------------------------------------
 Route::get("/publicitie/create",[PublicitieController::class,'SendDataPublicitie'])->name('publicitie.SendDataPublicitie');
 Route::post("/publicitie",[PublicitieController::class,'ReceiveDataAndCreatePublicitie'])->name('publicitie.ReceiveDataAndCreatePublicitie');
@@ -50,3 +65,12 @@ Route::post("/forPoint",[ForPointController::class,'ReceiveDataAndCreateForPoint
 //------------------------------------------------------------------------------------------------
 Route::get("/league/create",[LeagueController::class,'SendDataLeague'])->name('league.SendDataLeague');
 Route::post("/league",[LeagueController::class,'ReceiveDataAndCreateLeague'])->name('league.ReceiveDataAndCreateLeague');
+//------------------------------------------------------------------------------------------------
+Route::get("/record/create",[RecordController::class,'SendDataRecord'])->name('record.SendDataRecord');
+Route::post("/record",[RecordController::class,'ReceiveDataAndCreateRecord'])->name('record.ReceiveDataAndCreateRecord');
+//------------------------------------------------------------------------------------------------
+Route::get("/forSet/create",[ForSetController::class,'SendDataForSet'])->name('forSet.SendDataForSet');
+Route::post("/forSet",[ForSetController::class,'ReceiveDataAndCreateForSet'])->name('forSet.ReceiveDataAndCreateForSet');
+Route::get("/forSet/{forSet}/set/create",[SetController::class,'SendDataSet'])->name('set.SendDataSet');
+Route::post("/forSet/{vip}/set",[SetController::class,'ReceiveDataAndCreateSet'])->name('set.ReceiveDataAndCreateSet');
+Route::get("/forSet/back",[SetController::class,'RedirectPageCreateForSet'])->name('set.RedirectPageCreateForSet');
