@@ -16,6 +16,7 @@ class SportController extends Controller
         ->join('result_sport','result_sport.sport_id', 'sports.id')
         ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
         ->select('sports.nombre','types_of_results.tipo_resultado','sports.id as id')
+        ->whereNull('sports.deleted_at')
         ->get();
         return view('sport', compact('sports'));
     }
@@ -56,18 +57,50 @@ class SportController extends Controller
             return redirect()->route('sport.SendDataSport');
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
         }
     }
 
-    public function RedirectPageToEditSport (Sport $sport){
-        return view('SportUpdate',compact('sport'));
+    public function DeleteSport ($sport){
+        Sport::find($sport)->delete();
+        return back();
     }
 
+    public function RedirectPageToEditSport (Sport $sport){
+        return view('sportUpdate',compact('sport'));
+    }
+    
     public function UpdateSport (Request $request,Sport $sport){
+        DB::table('result_sport')->where('sport_id', $sport->id)->delete();
+
         $data = $request->only('nombre','URL');
-        $sport->update($data);
-        return redirect()->route('sport.SendDataSport', $sport->id);
+        try {
+            $sport->update($data);
+            if($request->post('typeOfResult') == '1'){
+                ResultSport::create([
+                    'sport_id' => $sport->id,
+                    'type_of_result_id' => '1'
+                ]);
+                return redirect()->route('sport.SendDataSport');
+            }
+            if($request->post('typeOfResult') == '2'){
+                ResultSport::create([
+                    'sport_id' => $sport->id,
+                    'type_of_result_id' => '2'
+                ]);
+                return redirect()->route('sport.SendDataSport');
+            }
+            ResultSport::create([
+                'sport_id' => $sport->id,
+                'type_of_result_id' => '3'
+            ]);
+            return redirect()->route('sport.SendDataSport');
+        }
+        catch (QueryException $e){
+            DB::rollBack();
+            return "Algun dato Ingresado es incorrecto";
+        }
     }
 
 }

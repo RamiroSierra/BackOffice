@@ -22,7 +22,8 @@ class ForSetController extends Controller
         $forSets = DB::table('for_sets')
         ->join('event_for_set', 'event_for_set.for_set_id','for_sets.id')
         ->join('events','event_for_set.event_id', 'events.id')
-        ->select('for_sets.ganadas_visita','for_sets.ganadas_local','events.fecha')
+        ->select('for_sets.ganadas_visita','for_sets.ganadas_local','events.fecha','for_sets.id as id')
+        ->whereNull('for_sets.deleted_at')
         ->get();
         $teams = DB::table('teams')
         ->join('league_team', 'league_team.team_id','teams.id')
@@ -33,6 +34,7 @@ class ForSetController extends Controller
         ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
         ->where('types_of_results.tipo_resultado','Por Sets')
         ->select('teams.nombre','teams.id')
+        ->whereNull('teams.deleted_at')
         ->get();
         $referees = Referee::all();
         $leagues = DB::table('leagues')
@@ -42,6 +44,7 @@ class ForSetController extends Controller
         ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
         ->where('types_of_results.tipo_resultado','Por Sets')
         ->select('leagues.nombre','leagues.id')
+        ->whereNull('leagues.deleted_at')
         ->get();
         return view('forSet', compact('forSets','teams','referees','leagues'));
     }
@@ -92,8 +95,93 @@ class ForSetController extends Controller
             return redirect()->route('set.SendDataSet', $forSet->id);
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
         }
-
     }
+
+    public function DeleteForSet ($forSet){
+        ForSet::find($forSet)->delete();
+        return back();
+    }
+
+    public function RedirectPageToEditForSet (ForSet $forSet){
+        $forSets = DB::table('for_sets')
+        ->join('event_for_set', 'event_for_set.for_set_id','for_sets.id')
+        ->join('events','event_for_set.event_id', 'events.id')
+        ->where('for_sets.id',$forSet->id)
+        ->select('for_sets.ganadas_visita','for_sets.ganadas_local','events.fecha','for_sets.id as id')
+        ->whereNull('for_sets.deleted_at')
+        ->first();
+        $teams = DB::table('teams')
+        ->join('league_team', 'league_team.team_id','teams.id')
+        ->join('leagues','leagues.id', 'league_team.league_id')
+        ->join('league_sport','league_sport.league_id', 'leagues.id')
+        ->join('sports','sports.id', 'league_sport.sport_id')
+        ->join('result_sport','result_sport.sport_id', 'sports.id')
+        ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
+        ->where('types_of_results.tipo_resultado','Por Sets')
+        ->select('teams.nombre','teams.id')
+        ->whereNull('teams.deleted_at')
+        ->get();
+        $referees = Referee::all();
+        $leagues = DB::table('leagues')
+        ->join('league_sport','league_sport.league_id', 'leagues.id')
+        ->join('sports','sports.id', 'league_sport.sport_id')
+        ->join('result_sport','result_sport.sport_id', 'sports.id')
+        ->join('types_of_results','types_of_results.id', 'result_sport.type_of_result_id')
+        ->where('types_of_results.tipo_resultado','Por Sets')
+        ->select('leagues.nombre','leagues.id')
+        ->get();
+        $sets= DB::table('sets')
+        ->where('Sets.for_set_id',$forSet->id)
+        ->select('sets.puntos_visita','sets.id as id','sets.puntos_local')
+        ->whereNull('sets.deleted_at')
+        ->get();
+        return view('forSetUpdate', compact('forSets','teams','referees','leagues','sets'));
+    }
+    
+    public function UpdateForSet (Request $request,ForSet $forSet){
+        $data = $request->only('ganadas_visita','ganadas_local');
+        $data2 = $request->only('fecha');
+
+        $eventId = DB::table('for_sets')
+        ->join('event_for_set', 'event_for_set.for_set_id','for_sets.id')
+        ->join('events','event_for_set.event_id', 'events.id')
+        ->where('for_sets.id',$forSet->id)
+        ->select('events.id as id')
+        ->first();
+        
+        DB::table('locals')->where('event_id', $eventId->id)->delete();
+        DB::table('visits')->where('event_id', $eventId->id)->delete();
+        DB::table('event_referee')->where('event_id', $eventId->id)->delete();
+
+        try {
+            $forSet->update($data);
+            $event = Event::find($eventId->id);
+            $event->update($data2);
+        
+            Local::create([
+                'event_id' => $eventId->id,
+                'team_id' => $request -> post("TeamLocal")
+            ]);
+            Visit::create([
+                'event_id' => $eventId->id,
+                'team_id' => $request -> post("TeamVist")
+            ]);
+            $seleccions = $request->seleccionarReferees;
+            foreach ($seleccions as $seleccion) {
+                EventReferee::create([
+                    'referee_id' => $seleccion,
+                    'event_id' => $eventId->id
+                ]);
+            }
+            return redirect()->route('forSet.SendDataForSet');
+        }
+        catch (QueryException $e){
+            DB::rollBack();
+            return "Algun dato Ingresado es incorrecto";
+        }
+    }
+
 }

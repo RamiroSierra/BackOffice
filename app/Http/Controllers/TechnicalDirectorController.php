@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use App\Models\TechnicalDirector;
 use Illuminate\Support\Facades\Validator;
 use \Illuminate\Database\QueryException;
@@ -29,6 +30,7 @@ class TechnicalDirectorController extends Controller
             return redirect()->route('technical.SendDataTechnical');
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
         }
     }
@@ -41,6 +43,7 @@ class TechnicalDirectorController extends Controller
     public function RedirectPageToEditTechnical (TechnicalDirector $technical){
         return view('technicalUpdate',compact('technical'));
     }
+    
     public function UpdateTechnical (Request $request,TechnicalDirector $technical){
         $data = $request->only('nombre','apellido');
         $technical->update($data);

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CardVip;
 use App\Models\Card;
@@ -40,7 +41,9 @@ class CardController extends Controller
             return redirect()->route('user.SendDataUser');
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
+
         }
     }
 }

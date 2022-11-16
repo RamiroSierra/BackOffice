@@ -19,15 +19,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-//-----------------------------Create--------------------------
     public function SendDataUser(){
         $standards = DB::table('users')
         ->join('client_user', 'client_user.user_id',  'users.id')
         ->join('clients', 'client_user.client_id', 'clients.id')
         ->join('externals', 'clients.id', 'externals.client_id')
         ->join('standards', 'externals.client_id', 'standards.client_id')
-        ->select('clients.nombre as clientN','clients.apellido as clientA',
-        'users.name as userN', 'users.email as userE','users.id as id' )
+        ->select('clients.nombre as clientN','clients.apellido as clientA','users.name as userN', 'users.email as userE','users.id as id' )
+        ->whereNull('users.deleted_at')
         ->get();
         $vips = DB::table('users')
         ->join('client_user', 'client_user.user_id',  'users.id')
@@ -35,6 +34,7 @@ class UserController extends Controller
         ->join('externals', 'clients.id', 'externals.client_id')
         ->join('vips', 'externals.client_id', 'vips.client_id')
         ->select('clients.nombre as clientN','clients.apellido as clientA','users.name as userN', 'users.email as userE','users.id as id' )
+        ->whereNull('users.deleted_at')
         ->get();
         return view('user', compact('standards', 'vips'));
     }
@@ -77,26 +77,61 @@ class UserController extends Controller
             return redirect()->route('card.SendDataCard', $vip->client_id);
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
         }
     }
     
-    public function RedirectPageToEditStandard ($standard){
-        $oda = DB::table('users')
+    public function DeleteStandardUser ($standard){
+        User::find($standard)->delete();
+        return back();
+    }
+
+    public function DeleteVipUser ($vip){
+        User::find($vip)->delete();
+        return back();
+    }
+
+    public function RedirectPageToEditUser (User $user){
+        $userr = DB::table('users')
         ->join('client_user', 'client_user.user_id',  'users.id')
         ->join('clients', 'client_user.client_id', 'clients.id')
-        ->join('externals', 'clients.id', 'externals.client_id')
-        ->join('standards', 'externals.client_id', 'standards.client_id')
-        ->select('clients.nombre as clientN','clients.apellido as clientA',
-        'users.name as userN', 'users.email as userE','users.id as id' )
-        ->where('standards.client_id',$standard)
-        ->get();
-        return view('satandardUpdate',compact('oda','standard'));
-    } 
-
-    public function UpdateStandard (Request $request,Standard $standard){
-        $data = $request->only('nombre','apellido','name','email','password');
-        $standard->update($data);
-        return redirect()->route('usar.ReceiveDataAndCreateUser', $standard->id);
-    } 
+        ->select('clients.nombre as clientN','clients.apellido as clientA','users.name as userN', 'users.email as userE','users.id as id')
+        ->where('users.id',$user->id)
+        ->whereNull('users.deleted_at')
+        ->first();
+        return view('userUpdate',compact('userr'));
+    }
+    
+    public function UpdateUser (Request $request,User $userr,Client $client){
+        $data1 = $request->only('name','email');
+        $data2 = $request->only('nombre','apellido');
+        $clientId = DB::table('users')
+            ->join('client_user', 'client_user.user_id',  'users.id')
+            ->join('clients', 'client_user.client_id', 'clients.id')
+            ->select('clients.id as id')
+            ->where('users.id',$userr->id)
+            ->first();
+        
+        DB::table('standards')->where('client_id', $clientId->id)->delete();
+        DB::table('card_vip')->where('client_id', $clientId->id)->delete();
+        DB::table('vips')->where('client_id', $clientId->id)->delete();
+        
+        try {
+            $userr->update($data1);
+            $client = Client::find($clientId->id);
+            $client->update($data2);
+        
+            if($request->post('typeOfClient') == '1'){
+                Standard::create(['client_id' => $clientId->id]);
+                return redirect()->route('user.SendDataUser');
+            }
+            $vip = Vip::create(['client_id' => $clientId->id]);
+            return redirect()->route('card.SendDataCard', $vip->client_id);
+        }
+        catch (QueryException $e){
+            DB::rollBack();
+            return "Algun dato Ingresado es incorrecto";
+        }
+    }
 }

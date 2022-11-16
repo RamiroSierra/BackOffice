@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use App\Models\Referee;
 use Illuminate\Support\Facades\Validator;
 use \Illuminate\Database\QueryException;
@@ -29,6 +30,7 @@ class RefereeController extends Controller
             return redirect()->route('referee.SendDataReferee');
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
         }
     }
@@ -41,6 +43,7 @@ class RefereeController extends Controller
     public function RedirectPageToEditReferee (Referee $referee){
         return view('refereeUpdate',compact('referee'));
     }
+    
     public function UpdateReferee (Request $request,Referee $referee){
         $data = $request->only('nombre','apellido');
         $referee->update($data);

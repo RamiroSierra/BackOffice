@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-   
     <form action="{{ route('card.ReceiveDataAndCreateCard',$vip)}}" method="post"> @csrf
         nombre_titular <input type="text" name="nombre_titular"><br>
         ci_titular <input type="number" name="ci_titular"><br>
@@ -26,12 +25,6 @@
             @foreach ($cards as $card)
                 <tr>
                     <td>{{ $card->nombre_titular }}</td>
-                        {{-- <form action="{{ route('card.delete', $card->id) }}" method="get" style="display: inline-block"> @csrf
-                            <button type="submit">Borrar</button>
-                        </form>
-                        <form action="{{ route('card.edit', $card->id) }}" style="display: inline-block"> @csrf
-                            <button type="submit">Actualizar</button>
-                        </form> --}}
                     </td>
                 </tr>
             @endforeach

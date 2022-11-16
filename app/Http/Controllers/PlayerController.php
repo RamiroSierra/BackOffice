@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +34,7 @@ class PlayerController extends Controller
             return redirect()->route('player.SendDataPlayer');
         }
         catch (QueryException $e){
+            DB::rollBack();
             return "Algun dato Ingresado es incorrecto";
         }
 
@@ -46,6 +48,7 @@ class PlayerController extends Controller
     public function RedirectPageToEditPlayer (Player $player){
         return view('playerUpdate',compact('player'));
     }
+    
     public function UpdatePlayer (Request $request,Player $player){
         $data = $request->only('edad','nombre','apellido','nacionalidad');
         $player->update($data);

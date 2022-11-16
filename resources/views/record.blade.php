@@ -13,7 +13,6 @@
         puntos del visita <input type="number" name="puntajeVisita"><br>
         puntos del local <input type="number" name="puntajeLocal"><br>
         Fecha <input type="datetime-local" name="fecha"><br>
-        
         Referees
         @foreach ($referees as $referee)
         <tr>
@@ -24,7 +23,6 @@
         </tr>
         @endforeach
         <div style="display: block">
-            
             Leagues
             <select name='League'>
                 @foreach ($leagues as $league)
@@ -56,25 +54,41 @@
     <table>
         <tbody>
             <tr>
-                <th>puntos del visita</th>
-                <th>puntos del local</th>
                 <th>Fecha</th>
+                <th>ID</th>
             </tr>
-            {{-- @foreach ($forPoints as $forPoint)
+            @foreach ($events as $event)
                 <tr>
-                    <td>{{ $forPoint->puntos_visita }}</td>
-                    <td>{{ $forPoint->puntos_local }}</td>
-                    <td>{{ $forPoint->fecha }}
-                        {{-- <form action="{{ route('card.delete', $card->id) }}" method="get" style="display: inline-block"> @csrf
+                    <td>{{ $event->fecha }}</td>
+                    <td>{{ $event->id }}</td>
+                    <td>
+                        <form action="{{ route('record.DeleteEvent', $event->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Borrar</button>
                         </form>
-                        <form action="{{ route('card.edit', $card->id) }}" style="display: inline-block"> @csrf
+                    </td>
+                    <td>
+                        <form action="{{ route('record.RedirectPageToEditEvent', $event->id) }}" method="get" style="display: inline-block"> @csrf
                             <button type="submit">Actualizar</button>
                         </form>
                     </td>
                 </tr>
-            @endforeach --}}
+            @endforeach
         </tbody>
     </table>
+    <div style="position:absolute; right: 5px;top: 0px;">
+        <ul style="list-style: none;">
+            <li><a href="{{ route('player.SendDataPlayer')}}"><button>Crear jugador</button> </a></li>
+            <li><a href="{{ route('referee.SendDataReferee') }}"><button>Crear Arbitro</button> </a></li>
+            <li><a href="{{ route('technical.SendDataTechnical') }}"><button>Crear DT</button> </a></li>
+            <li><a href="{{ route('sport.SendDataSport') }}"><button>Crear Deporte</button> </a></li>
+            <li><a href="{{ route('user.SendDataUser') }}"><button>Crear Cliente</button> </a></li>
+            <li><a href="{{ route('publicitie.SendDataPublicitie') }}"><button>Crear Publicidad</button> </a></li>
+            <li><a href="{{ route('team.SendDataTeam') }}"><button>Crear Equipo</button> </a></li>
+            <li><a href="{{ route('forPoint.SendDataForPoint') }}"><button>Crear Evento por Puntos</button> </a></li>
+            <li><a href="{{ route('league.SendDataLeague') }}"><button>Crear liga</button> </a></li>
+            <li><a href="{{ route('record.SendDataRecord') }}"><button>Crear Evento por marca</button> </a></li>
+            <li><a href="{{ route('forSet.SendDataForSet') }}"><button>Crear Evento por sets</button> </a></li>
+        </ul>
+    </div>
 </body>
 </html>
