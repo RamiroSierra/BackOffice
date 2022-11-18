@@ -101,6 +101,13 @@ class ForPointController extends Controller
     }
 
     public function DeleteForPoint ($forPoint){
+        $event = DB::table('for_points')
+        ->join('event_for_point', 'event_for_point.for_point_id','for_points.id')
+        ->join('events','event_for_point.event_id', 'events.id')
+        ->select('events.id as id')
+        ->where('for_points.id',$forPoint)
+        ->first();
+        Event::find($event->id)->delete();
         ForPoint::find($forPoint)->delete();
         return back();
     }
@@ -110,6 +117,7 @@ class ForPointController extends Controller
         ->join('event_for_point', 'event_for_point.for_point_id','for_points.id')
         ->join('events','event_for_point.event_id', 'events.id')
         ->select('for_points.puntos_visita','for_points.puntos_local','events.fecha','for_points.id as id')
+        ->where('for_points.id',$forPoint->id)
         ->whereNull('for_points.deleted_at')
         ->first();
         $teams = DB::table('teams')

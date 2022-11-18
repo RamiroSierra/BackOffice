@@ -101,6 +101,14 @@ class ForSetController extends Controller
     }
 
     public function DeleteForSet ($forSet){
+        $event = DB::table('for_sets')
+        ->join('event_for_sets', 'event_for_sets.for_point_id','for_sets.id')
+        ->join('events','event_for_sets.event_id', 'events.id')
+        ->select('events.id as id')
+        ->where('for_sets.id',$forSet)
+        ->first();
+        
+        Event::find($event->id)->delete();
         ForSet::find($forSet)->delete();
         return back();
     }

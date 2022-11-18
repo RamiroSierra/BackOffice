@@ -12,7 +12,6 @@
         puntos del visita <input type="number" name="puntos_visita"><br>
         puntos del local <input type="number" name="puntos_local"><br>
         Fecha <input type="datetime-local" name="fecha"><br>
-        
         Referees
         @foreach ($referees as $referee)
         <tr>
@@ -23,16 +22,14 @@
         </tr>
         @endforeach
         <div style="display: block">
-            
             Leagues
             <select name='League'>
                 @foreach ($leagues as $league)
-                        <option value="{{ $league->id }}">{{ $league->nombre }}</option>
+                    <option value="{{ $league->id }}">{{ $league->nombre }}</option>
                 @endforeach
             </select>
         </div>
         <div style="display: block">
-            
             Team Local
             <select name='TeamLocal'>
                 @foreach ($teams as $team)
